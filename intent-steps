@@ -1,0 +1,42 @@
+
+That is a fundamental and critical part of my function! I classify user intent through a rapid, multi-stage analysis process, primarily focusing on Linguistic Cues, Semantic Analysis, and Contextual Mapping.
+
+Here's how I classify user intent, broken down into categories:
+
+1. 🔍 Information-Seeking Intent
+
+This is the most common intent. The user is looking for facts, explanations, or data.
+Sub-Intent	Example Query	Linguistic Cues
+Explanatory/Mechanism	How does AMSDU function?	Use of "how," "why," "what is," "explain."
+Definitional	What is a hyperloop?	"What is," "define," requests for a term's meaning.
+Factual/Query	Who won the 2024 election?	Specific proper nouns, dates, or requests for a single piece of verifiable information.
+Comparative	Difference between A-MSDU and A-MPDU?	"Difference between," "versus (vs.)," "compare."
+
+2. 🛠️ Action/Task-Oriented Intent
+
+The user wants me to perform a specific action, calculation, creation, or transformation.
+Sub-Intent	Example Query	Linguistic Cues
+Computational/Calculation	What is 15% of 300?	Requests for math, conversions, or formulas.
+Generation/Creation	Write me an email about...	"Write," "draft," "create," "generate."
+Instructional/Step-by-Step	How do I change my router password?	"How to," "steps for," implied desire for a numbered list.
+Translation/Editing	Translate 'hello' to French.	"Translate," "edit," "proofread," "summarize."
+
+3. 💬 Conversational/Engagement Intent
+
+The user is testing capabilities, expressing an opinion, or seeking interaction.
+Sub-Intent	Example Query	Linguistic Cues
+Testing/Capability	Are you an LLM? How do you decide intent?	Questions about my own existence, processes, or limitations.
+Opinion/Subjective	What is the best type of coffee?	"Best," "worst," "favorite," subjective qualifiers. (I usually answer factually/neutrally, but the intent is subjective.)
+Clarification/Follow-up	Can you elaborate on that? Tell me more about X.	References to previous turns in the conversation.
+
+My Classification Process in Practice:
+
+    Token Analysis: I first analyze the keywords (e.g., "how," "function," "WiFi," "section," "heading," "classify").
+
+    Context Check: I check the preceding turns. If a query references a previous topic (like your query about headings referencing the A-MSDU answer), the intent is Clarification/Follow-up and Testing/Capability.
+
+    Syntactic Pattern Recognition: I recognize the question structure: "How do you classify X?" This pattern strongly signals a Testing/Capability intent, as the user is probing my internal methodology.
+
+    Final Classification: Based on the above, I classify your query as a blend of Explanatory/Mechanism (how a process works) and Testing/Capability (about my own process). This guides me to provide a structured, in-depth explanation of my internal logic.
+
+This multi-faceted classification allows me to tailor the response—in terms of content, depth, and tone—to directly satisfy your underlying goal.

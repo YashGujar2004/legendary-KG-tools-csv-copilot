@@ -1,0 +1,70 @@
+
+echo " reset chunk_counter before running this file"
+echo "process will start in 5 seconds...."
+echo "press ctrl-c to exit the process"
+
+
+source ./process_80211_2020_envvariables.sh
+
+echo "1" > chunk_counter.txt
+
+# ****extract sections is obselete since we process entire spec in one go in create_pdf_to_chunks file.
+# ****we are maintaing extract_sections for future use 
+#python extract_sections_spec.py
+
+#python create_pdf_to_chunks_json_pagenumber_v4.py
+#python trim_80211_2020_chunks.py
+
+#python kg_build_section_embeddings.py
+#python kg_create_clusters.py 
+
+if [[ "$CHROMADB_CLOUD_SERVICE_MODE" == "true" ]]; then
+  python kg_create_cluster_section_chromadb_cloud_service.py 
+else
+  python kg_create_cluster_section.py 
+fi
+
+python create_top_features_from_clusters.py
+
+if false; then
+# ---- these var files are to create vars from the tables in the spec
+#python var_extract_tables.py 
+#python var_extract_titles.py
+#python var_create_final_list.py
+
+#correct RSNE to RSN element to identified as element
+
+python create_element_list_from_chunks.py
+python create_chunk_link_element.py
+python create_elements_names_list.py
+
+python create_field_list_from_chunks.py
+python create_chunk_link_field.py
+python create_fields_names_list.py
+
+python create_frame_list_from_chunks.py
+python create_chunk_link_frame.py
+python create_frames_names_list.py
+
+python create_frame_link_field.py
+python create_frame_link_element.py
+
+python kg_create_cluster_cumulative_link_frames.py
+
+python create_features_subfeatures_groups.py 
+python create_hierarchy_features.py 
+python create_kg_from_tree_topics_features_subfeatures.py
+python build_kg_feature_nodes_frame_edges.py
+python transform_topic_to_features.py
+
+#These scripts are to build a Neo4J compatible files
+
+python transform_tree_features_for_neo4j.py
+python kg_build_neo4j_level.py
+python extract_chunks_for_neo4J.py
+
+python kg_create_features_cumulative_link_frames.py
+python kg_create_features_cumulative_link_fields.py
+python kg_create_features_cumulative_link_elements.py
+
+fi

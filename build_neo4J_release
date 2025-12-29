@@ -1,0 +1,33 @@
+source ./process_80211_2020_envvariables.sh
+
+SRC_DIR="."
+DEST_DIR="neo4j_build_$(date +%Y%m%d_%H%M%S)"
+
+mkdir -p "$DEST_DIR"
+
+for file in \
+    "$CHUNK_LINK_ELEMENT" \
+    "$CHUNK_LINK_FIELD" \
+    "$CHUNK_LINK_FRAME" \
+    "$FRAME_LINK_FIELD" \
+    "$FRAME_LINK_ELEMENT" \
+    "$CHUNKS_FOR_NEO4J" \
+    "$ELEMENTS_LIST_NAMES" \
+    "$FIELDS_LIST_NAMES" \
+    "$FRAMES_LIST_NAMES" \
+    "$KG_TOP_FEATURES" \
+    "$KG_FEATURE_FRAME_SCORE" \
+    "$KG_FEATURE_FIELD_SCORE" \
+    "$KG_FEATURE_ELEMENT_SCORE" \
+    "neo4j_input_level_1.csv" \
+    "neo4j_input_level_2.csv" \
+    "neo4j_input_level_3.csv" \
+    "neo4j_input_level_4.csv" \
+    "neo4j_input_level_5.csv"
+do
+    cp "$SRC_DIR/$file" "$DEST_DIR"/
+    
+done
+
+tar zcvf "$DEST_DIR".tar.gz -C "$(dirname "$DEST_DIR")" "$(basename "$DEST_DIR")"
+echo "Selected files copied from $SRC_DIR to $DEST_DIR"
