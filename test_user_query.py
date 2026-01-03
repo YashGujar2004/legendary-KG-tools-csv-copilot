@@ -17,7 +17,8 @@ def get_openai_embedding(text, model=OPENAI_EMBEDDING_MODEL):
     """Calls the OpenAI API to generate a text embedding."""
     
     # Requires OPENAI_API_KEY environment variable to be set
-    client = OpenAI(api_key="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")
+    client = OpenAI(api_key=os.environ["OPENAI_API_KEY"]
+            )
 
     
     print(f"Generating embedding for query using '{model}'...")

@@ -15,7 +15,8 @@ TREE_HIERARCHY_FILE = os.environ.get("SPEC_SECTIONS_TREE_HIERARCHY_FILE")
 MAX_TOKENS = 8000  # Max tokens per chunk
 
 # Initialize OpenAI client
-client = OpenAI(api_key="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")
+client = OpenAI(api_key=os.environ["OPENAI_API_KEY"]
+        )
 
 # ============================================================
 #  🧠  CLUSTERING SECTION: Identify groups of similar features
@@ -28,7 +29,7 @@ from sklearn.cluster import AgglomerativeClustering
 
 from sklearn.metrics.pairwise import cosine_similarity
 
-CLUSTER_THRESHOLD = 0.20   # tweak this value to control cluster granularity
+CLUSTER_THRESHOLD = float(os.environ.get("CLUSTER_THRESHOLD")) # tweak this value to control cluster granularity
 import tiktoken
 tokenizer = tiktoken.get_encoding("cl100k_base")
 
@@ -45,8 +46,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 import json
 import numpy as np
 
-TOLERANCE = 0.1                  # acceptable deviation threshold
-
+TOLERANCE = float(os.environ.get("TOLERANCE"))   # acceptable deviation threshold
 
 # -----------------------------
 # Helper functions

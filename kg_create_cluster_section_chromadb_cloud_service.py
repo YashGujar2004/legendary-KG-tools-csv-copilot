@@ -12,17 +12,16 @@ import chromadb
 # --- Config ---
 KG_CLUSTERS = os.environ.get("KG_CLUSTERS")
 
-CHROMADB_TENANT_ID = "754e82c6-06c8-4832-938a-ad5bf6f255d2"  # your tenant ID
-CHROMADB_API_KEY = "ck-6xo4MzCqYB1GnCqCPZMba3vDvX54uTekbf2rE9xjj4M5"  # your API key
+CHROMADB_TENANT_ID = os.environ["CHROMADB_TENANT_ID"]# your tenant ID
+CHROMADB_API_KEY = os.environ["CHROMADB_API_KEY"]  # your API key
 
-CHROMADB_CLOUD_SERVICE_NAME = os.environ.get("CHROMADB_CLOUD_SERVICE_NAME")
-
-
-os.environ["OPENAI_API_KEY"] = "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"
+OPENAI_API_KEY = os.environ["OPENAI_API_KEY"]
 
 EMBEDDING_CACHE_FILE= os.environ.get("EMBEDDING_CACHE_FILE")
 CHUNKS_FILE = os.environ.get("SPEC_CHUNKS_TRIM")
+
 COLLECTION_NAME = os.environ.get("CHROMADB_CLUSTER_SECTION_COLLECTION_NAME")
+CHROMADB_CLOUD_DATABASE_NAME = os.environ.get("CHROMADB_CLOUD_DATABASE_NAME")
 
 # adjust batch size as needed (KEEP 1 ONLY)
 BATCH_SIZE = 1
@@ -86,7 +85,7 @@ print("Connecting to Chroma Cloud...")
 try:
     client = chromadb.CloudClient(
         tenant=CHROMADB_TENANT_ID,
-        database=CHROMADB_CLOUD_SERVICE_NAME,
+        database=CHROMADB_CLOUD_DATABASE_NAME,
         api_key=CHROMADB_API_KEY
         )
     client.heartbeat() 

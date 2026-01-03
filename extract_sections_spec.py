@@ -36,10 +36,13 @@ def extract_pages(input_pdf, output_pdf, start_page, end_page):
         return False
 
 # Example Usage
-input_pdf_path = os.environ.get("SPEC")
-output_pdf_path = "80211-2020-sections.pdf" # Replace with desired output path
-start_page_num = 219 #Extract from page 2
-end_page_num = 3429 # Extract up to and including page 5
+input_pdf_path = os.environ["SPEC"]
+output_pdf_path = os.environ["TRIM_SPEC_WIFI"] # Replace with desired output path
+# start_page_num = 219 #Extract from page 2
+# end_page_num = 3429 # Extract up to and including page 5
+start_page_num = int(os.environ["START_PAGE_NUM"])
+end_page_num = int(os.environ["END_PAGE_NUM"])
+
 
 if extract_pages(input_pdf_path, output_pdf_path, start_page_num, end_page_num):
     print(f"Pages {start_page_num} to {end_page_num} extracted successfully to {output_pdf_path}")

@@ -23,7 +23,15 @@ HEADER_LINES = [
     "Authorized licensed use limited to: rajan batra"
     "Authorized licensed use",
     "rajan batra",
-    "Downloaded on December"
+    "Downloaded on December",
+    "IEEE Std 802.11-2024",
+    "IEEE Standard for Information Technology—",
+    "Local and Metropolitan Area Networks—",
+    "Specific Requirements",
+    "Part 11: Wireless LAN MAC and PHY Specifications",
+    "Telecommunications and Information Exchange between Systems",
+    "Part 11: Wireless LAN Medium Access Control",
+    "MAC and Physical Layer (PHY) Specifications"
 ]
 
 FOOTER_LINES = [
@@ -45,7 +53,15 @@ FOOTER_LINES = [
     "Authorized licensed use limited to: rajan batra"
     "Authorized licensed use",
     "rajan batra",
-    "Downloaded on December"
+    "Downloaded on December",
+    "IEEE Std 802.11-2024",
+    "IEEE Standard for Information Technology—",
+    "Local and Metropolitan Area Networks—",
+    "Specific Requirements",
+    "Part 11: Wireless LAN MAC and PHY Specifications"
+    "Telecommunications and Information Exchange between Systems",
+    "Part 11: Wireless LAN Medium Access Control",
+    "MAC and Physical Layer (PHY) Specifications"
 ]
 
 SIMILARITY_THRESHOLD = 50  # Fuzzy match threshold (0-100)

@@ -8,7 +8,9 @@ def remove_section_chunks(input_file, output_file):
         data = json.load(f)
 
     # Section prefixes to exclude
-    exclude_prefixes = ("6", "7", "8")
+    exclude_prefixes = tuple(
+        os.environ.get("EXCLUDE_PREFIXES", "").split(",")
+    )
 
     # Keep only chunks where section_number does NOT start with excluded prefixes
     filtered_data = [

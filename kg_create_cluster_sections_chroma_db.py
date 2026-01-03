@@ -1,12 +1,12 @@
 
 import json
+import os
 import chromadb
 
 # === CONFIG ===
 KG_CLUSTERS = "kg_clusters.json"
-CHROMA_PATH = "vectorstore_cluster_section"         # path where Chroma data is saved
-COLLECTION_NAME = "vectorstore_cluster_section_db"       # name of Chroma collection
-
+CHROMA_PATH = os.environ["CHROMADB_FOR_CLUSTER_SECTION"]         # path where Chroma data is saved
+COLLECTION_NAME = os.environ["CHROMADB_CLUSTER_SECTION_COLLECTION_NAME"]       # name of Chroma collection
 
 def create_chroma_db_for_sections(filename=KG_CLUSTERS):
     """Reads kg_clusters.json, creates a persistent ChromaDB collection for section embeddings."""

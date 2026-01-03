@@ -6,9 +6,9 @@ from collections import defaultdict
 import math
 
 
-chunks_to_frames_file = os.getenv("CHUNK_LINK_FRAME")
-kg_clusters_file = os.getenv("KG_CLUSTERS")
-kg_cluster_primary_frame_file = os.getenv("KG_CLUSTER_PRIMARY_FRAME")
+chunks_to_frames_file = os.environ["CHUNK_LINK_FRAME"]
+kg_clusters_file = os.environ["KG_CLUSTERS"]
+kg_cluster_primary_frame_file = os.environ["KG_CLUSTER_PRIMARY_FRAME"]
 
 
 # ============================================================
@@ -214,48 +214,36 @@ for fr in common_frames:
 
 PRIMARY_FRAME_MINIMUM_GLOBAL_SCORE = max(scores)
 
-
 # ============================================================
-# BUILD CLUSTER PRIMARY FRAME LIST
+# BUILD CLUSTER PRIMARY FRAME LIST (ONE ROW PER FRAME)
 # ============================================================
 
-# Normalize frame names for safety
-frame_cluster_score_df["frame_name"] = frame_cluster_score_df["frame_name"].astype(str)
-
-# Dictionary: cluster_id → list of primary frames
-cluster_to_primary = {}
+rows = []
 
 for cluster_id, subdf in frame_cluster_score_df.groupby("cluster_id"):
 
     # Filter frames below threshold
     filtered = subdf[subdf["global_score"] > PRIMARY_FRAME_MINIMUM_GLOBAL_SCORE]
 
-    # Sort by global_score DESCENDING (high → low)
-    #filtered = filtered.sort_values(by="global_score", ascending=False)
+    # Sort by TF-IDF descending
     filtered = filtered.sort_values(by="tf_idf", ascending=False)
 
-    # Build list of "frame:score"
-    primary_list = [
-        f"{row['frame_name']}:{row['global_score']}:{row['tf_idf']}"
-        for _, row in filtered.iterrows()
-    ]
+    # One row per frame
+    for _, row in filtered.iterrows():
+        rows.append({
+            "cluster_id": cluster_id,
+            "primary_frames": row["frame_name"],
+            "global_score": row["global_score"],
+            "tf_idf": row["tf_idf"]
+        })
 
-    # Join into comma-separated string
-    primary_frames_str = ", ".join(primary_list)
-
-    cluster_to_primary[cluster_id] = primary_frames_str
-
-
-# final dataframe
-out_df = pd.DataFrame([
-    {"cluster_id": cid, "primary_frames": frames}
-    for cid, frames in cluster_to_primary.items()
-])
+# Final dataframe
+out_df = pd.DataFrame(
+    rows,
+    columns=["cluster_id", "primary_frames", "global_score", "tf_idf"]
+)
 
 out_df.to_csv(kg_cluster_primary_frame_file, index=False)
-
-print(f"\nSaved:{kg_cluster_primary_frame_file}" )
-print(out_df.head())
 
 
 
@@ -283,8 +271,3 @@ def validate_frame(frame_name):
             f"  Cluster {cid}: freq={freq}, "
             f"local={loc:.4f}, tfidf={tfidf:.4f}"
         )
-
-
-# Example: validate_frame("RTS frame")
-##########################################################################
-

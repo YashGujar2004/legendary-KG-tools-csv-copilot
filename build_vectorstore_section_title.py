@@ -30,8 +30,6 @@ from langchain.docstore.document import Document
  
 # Set the environment variables as requested
 os.environ['LANGCHAIN_TRACING_V2'] = "true"
-os.environ['LANGCHAIN_API_KEY']="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"
-os.environ['OPENAI_API_KEY']= "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"
 
 # Optionally, you can verify that they were set by printing them
 print("LANGCHAIN_TRACING_V2:", os.environ['LANGCHAIN_TRACING_V2'])

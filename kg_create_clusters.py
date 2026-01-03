@@ -10,7 +10,7 @@ import os
 # turn on/off cloud db creation
 CHROMADB_CLOUD_SERVICE_MODE_ENV = os.environ.get("CHROMADB_CLOUD_SERVICE_MODE")
 
-CHROMADB_CLOUD_SERVICE_MODE = CHROMADB_CLOUD_SERVICE_MODE_ENV =="true" 
+CHROMADB_CLOUD_SERVICE_MODE = CHROMADB_CLOUD_SERVICE_MODE_ENV == "true" 
 
 # keep FALSE for local Chroma creation 
 
@@ -20,17 +20,15 @@ CHROMA_PATH = os.environ.get("CHROMADB_FOR_CLUSTERS")
 EMBEDDING_CACHE_FILE = os.environ.get("EMBEDDING_CACHE_FILE")
 CHUNKS_FILE = os.environ.get("SPEC_CHUNKS_TRIM")
 
-CHROMADB_CLOUD_SERVICE_NAME = os.environ.get("CHROMADB_CLOUD_SERVICE_NAME")
-
-COLLECTION_NAME = os.environ.get("CHROMADB_CLUSTER_COLLECTION_NAME")
-
-
 # --- Config for CHROMA CLOUD ---
-CHROMADB_TENANT_ID = "754e82c6-06c8-4832-938a-ad5bf6f255d2"  # your tenant ID
-CHROMADB_API_KEY = "ck-6xo4MzCqYB1GnCqCPZMba3vDvX54uTekbf2rE9xjj4M5"  # your API key
+CHROMADB_TENANT_ID = os.environ["CHROMADB_TENANT_ID"]  # your tenant ID
+CHROMADB_API_KEY = os.environ["CHROMADB_API_KEY"]  # your API key
+CHROMADB_CLOUD_DATABASE_NAME = os.environ["CHROMADB_CLOUD_DATABASE_NAME"]
+COLLECTION_NAME = os.environ["CHROMADB_CLUSTER_COLLECTION_NAME"]
 
-CHROMADB_BATCH_SIZE = 100
-
+CHROMADB_BATCH_SIZE = int(
+    os.environ.get("CHROMADB_BATCH_SIZE")
+)
 
 # Ensure the Chroma directory exists
 os.makedirs(CHROMA_PATH, exist_ok=True)
@@ -430,15 +428,15 @@ def cluster_all_sections_from_embeddings(all_section_embeddings, threshold=0.275
 
 # --- CHROMA CLOUD PIPELINE ---
 
-def connect_chroma_cloud(tenant_id: str, api_key: str) -> chromadb.Client:
+def connect_chroma_cloud(tenant_id: str, api_key: str, database: str) -> chromadb.Client:
     
-    print("Connecting to Chroma Cloud...")
+    print("Connecting to Chroma Cloud for Clusters Upload...")
 
     try:
         client = chromadb.CloudClient(
-            tenant=CHROMADB_TENANT_ID,
-            database=CHROMADB_CLOUD_SERVICE_NAME,
-            api_key=CHROMADB_API_KEY
+            tenant=tenant_id,
+            database=database,
+            api_key=api_key
         )
         client.heartbeat() 
         print("Connection successful (heartbeat OK).")
@@ -507,7 +505,7 @@ def create_chroma_db_cloud(filename=KG_CLUSTERS):
 
     # 3. Initialize Chroma Cloud Client (MODIFIED)
     # This now calls our helper function instead of PersistentClient
-    client_db = connect_chroma_cloud(CHROMADB_TENANT_ID, CHROMADB_API_KEY)
+    client_db = connect_chroma_cloud(CHROMADB_TENANT_ID, CHROMADB_API_KEY, CHROMADB_CLOUD_DATABASE_NAME)
     
     # 4. Create or Get Collection (Unchanged, but now on the cloud)
     print(f"Creating/getting cloud collection '{COLLECTION_NAME}'...")

@@ -48,8 +48,7 @@ FOOTER_LINES = [
     "Downloaded on December"
 ]
 
-SIMILARITY_THRESHOLD = 50  # Fuzzy match threshold (0-100)
-
+SIMILARITY_THRESHOLD = int(os.environ.get("SIMILARITY_THRESHOLD"))  # Fuzzy match threshold (0-100)
 
 # Regex to detect sections & sub-sections inline (Handles major & minor sections)
 
@@ -74,7 +73,7 @@ def is_valid_next_section(current_section_number, curr_key, next_key):
 
     if not curr_key:
       if (next_key[0] == 1): 
-          new_heading = 1;
+          new_heading = 1
           return True 
      # else:
      #   print("next key none:", next_key)
@@ -138,7 +137,7 @@ print("\n🔹 **read the starting chunk number**")
 # Regex: line starting with optional spaces, then "Annex ", then one capital A-Z
 
 #  pdf_path = sys.argv[1]
-pdf_path = os.environ.get("FULL_SPEC_WIFI")
+pdf_path = os.environ.get("TRIM_SPEC_WIFI")
 doc = fitz.open(pdf_path)
 
 def read_chunk_counter(filename):
@@ -231,7 +230,7 @@ for page_num in range(len(doc)):
           #print("\n curr section number", current_section_number);
 
           if is_valid_next_section (current_section_number, curr_key, next_key):
-            new_heading = 1;
+            new_heading = 1
             #print("xx new heading")
 
         if current_page_start >= annex_page_number:
@@ -241,7 +240,7 @@ for page_num in range(len(doc)):
             annex_letter = annex_match.group(1)       # Extract the letter, e.g., "A"
             next_section_number = annex_letter
             annex_title = f"Annex {annex_letter}"      # Section title will be "Annex X"
-            new_heading = 1;
+            new_heading = 1
         # Save current section if it exists
             #print("found annex", annex_title)
                     
@@ -310,8 +309,11 @@ print("no of sections: \n", len(sections))
 #    print(f"- {line}")
 
 # Step 3: Chunking with RecursiveCharacterTextSplitter
-chunk_size = 900000 
-chunk_overlap = 500
+# chunk_size = 900000 
+# chunk_overlap = 500
+chunk_size = int(os.environ.get("CHUNK_SIZE"))
+chunk_overlap = int(os.environ.get("CHUNK_OVERLAP"))
+
 initial_chunks = []
 chunk_id_counter = os.environ.get("CHUNK_ID_COUNTER")
 chunk_counter = read_chunk_counter(chunk_id_counter)  # Unique chunk ID counter
